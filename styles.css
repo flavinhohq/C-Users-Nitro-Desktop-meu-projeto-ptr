@@ -1,0 +1,65 @@
+:root{
+  --bg:#ffffff; --card:#ffffff; --text:#0b1d2a; --muted:#64748b; --border:#d6e1f2;
+  --brand:#0a3d91; --brand-2:#1556c1; --ok:#0f9d58; --bad:#d93025;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
+a{color:var(--brand);text-decoration:none}
+
+.header-inline{display:flex;align-items:center;justify-content:center;padding:16px 20px;border-bottom:1px solid var(--border);background:#f7faff}
+.header-inline h1{margin:0;font-size:18px;font-weight:700;color:var(--brand)}
+
+.steps,.content{display:grid;gap:16px;padding:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px}
+.card.thin{padding:10px}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.badge{border:1px solid var(--border);border-radius:999px;padding:4px 10px;font-size:12px;color:var(--muted);background:#f7fbff}
+.badge.good{border-color:#bfe8d0;background:#e9f7ef;color:#0f5132}
+.badge.bad{border-color:#f6c7c2;background:#fbe9e7;color:#7a120c}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+
+.field{display:flex;flex-direction:column;gap:6px}
+input,select,textarea{
+  background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);
+  font:inherit;font-size:14px;line-height:1.2;letter-spacing:.01em;
+}
+input[type="date"],input[type="time"]{font:inherit;font-size:14px;line-height:1.2}
+input[type="time"]::-webkit-datetime-edit,
+input[type="time"]::-webkit-datetime-edit-fields-wrapper,
+input[type="time"]::-webkit-datetime-edit-hour-field,
+input[type="time"]::-webkit-datetime-edit-minute-field,
+input[type="time"]::-webkit-datetime-edit-ampm-field { padding:0 }
+
+.list{display:grid;gap:8px}
+.list-row{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px dashed var(--border);border-radius:10px;padding:10px 12px}
+.row-actions{display:flex;gap:8px}
+.check{display:inline-flex;align-items:center;gap:8px}
+
+.btn{background:#f0f5ff;border:1px solid var(--border);color:var(--brand);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+.btn:hover{background:#e8f0ff}
+.btn.primary{background:linear-gradient(0deg, var(--brand-2), var(--brand-2));border-color:var(--brand-2);color:#fff}
+.btn.success{background:#e8f7ef;border-color:#c7eed8;color:#0f5132}
+.btn.ghost{background:#fff}
+
+.footer-actions{display:flex;justify-content:space-between;gap:12px;position:sticky;bottom:0;background:#ffffffcc;backdrop-filter:saturate(120%) blur(2px);padding:12px 20px;border-top:1px solid var(--border)}
+
+/* --- Rodapé com logo (página) --- */
+.brand-footer{position:relative;display:flex;align-items:center;justify-content:center;margin:6px 20px 0 20px;padding:6px 0}
+.brand-footer img{position:absolute;left:0;max-height:26px;object-fit:contain}
+.brand-footer .brand-title{font-weight:600;color:var(--brand);}
+
+/* --- Área do PDF --- */
+.print-report{position:absolute;left:-99999px;top:0;background:#fff;color:#111;padding:24px}
+.print-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.print-box{border:1px solid #ccc;border-radius:8px;padding:12px}
+.sign-pad-img{max-width:280px;border:1px dashed #ccc;border-radius:8px}
+
+/* rodapé do PDF */
+.rep-brand{display:flex;align-items:center;gap:12px;margin-top:8px}
+.rep-brand img{max-height:26px;object-fit:contain}
+
+.cam-box{display:grid;gap:8px;background:#fff;border:1px dashed var(--border);border-radius:12px;padding:10px;max-width:420px}
+.cam-box video{width:100%;border-radius:8px;background:#000}
+.muted{color:var(--muted)}
