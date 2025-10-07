@@ -5,28 +5,30 @@
 <title>PTR</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="boot.js"></script>
+<script src="i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-<style>
-/* ajustes do cabeçalho para logo à esquerda + título centralizado */
-.header-inline{position:relative;display:flex;align-items:center;justify-content:center;padding:16px 20px;border-bottom:1px solid var(--border);background:#f7faff}
-.header-inline img#logoHead{position:absolute;left:20px;max-height:32px;object-fit:contain;display:none}
-.header-inline h1{margin:0;font-size:18px;font-weight:700;color:var(--brand);text-align:center}
-</style>
 </head>
 <body>
-
 <header class="header-inline">
   <img id="logoHead" alt="logo">
-  <h1>PERMISSÃO DE TRABALHO DE RISCO - PTR</h1>
+  <h1 id="title-ptr">PERMISSÃO DE TRABALHO DE RISCO - PTR</h1>
 </header>
 
+<nav class="navbar">
+  <a data-nav="settings" href="settings.html">Configurações</a>
+  <a data-nav="dashboard" href="dashboard.html">Dashboard</a>
+  <a data-nav="reports" href="reports.html">Relatórios</a>
+  <a data-nav="help" href="help.html">Ajuda</a>
+</nav>
+
 <main class="steps">
-  <!-- 1) Dados Iniciais -->
+  <!-- 1 -->
   <section class="card">
-    <div class="card-head"><h3>1) Dados Iniciais</h3><span class="badge">Obrigatório</span></div>
+    <div class="card-head"><h3 id="t-step1">1) Dados Iniciais</h3><span class="badge">Obrigatório</span></div>
     <div class="grid">
       <label class="field"><span>Empresa</span><input id="empresa" type="text" value="Mecalux do Brasil"></label>
       <label class="field"><span>Código PTR (sequencial)</span><input id="ptrCodigo" type="text" placeholder="PTR-00001"></label>
@@ -37,37 +39,36 @@
     </div>
   </section>
 
-  <!-- 2) Tipos de Atividades -->
+  <!-- 2 -->
   <section class="card">
-    <div class="card-head"><h3>2) Tipos de Atividades</h3><span class="badge">Selecione</span></div>
+    <div class="card-head"><h3 id="t-step2">2) Tipos de Atividades</h3><span class="badge">Selecione</span></div>
     <div id="listaAtividades" class="list"></div>
     <p class="muted">Edite em <strong>Configurações → Catálogos → Tipos de Atividade</strong>.</p>
   </section>
 
-  <!-- 3) Riscos (8 por atividade) -->
+  <!-- 3 -->
   <section class="card">
-    <div class="card-head"><h3>3) Riscos</h3><span class="badge">8 por atividade</span></div>
+    <div class="card-head"><h3 id="t-step3">3) Riscos</h3><span class="badge">8 por atividade</span></div>
     <div id="riscosContainer" class="list"></div>
   </section>
 
-  <!-- 4) Equipamentos -->
+  <!-- 4 -->
   <section class="card">
-    <div class="card-head"><h3>4) Equipamentos</h3><span class="badge">Selecione</span></div>
+    <div class="card-head"><h3 id="t-step4">4) Equipamentos</h3><span class="badge">Selecione</span></div>
     <div id="listaEquip" class="list"></div>
     <p class="muted">Edite em <strong>Configurações → Catálogos → Equipamentos</strong>.</p>
   </section>
 
-  <!-- 5) Análise de Riscos & Checklist -->
+  <!-- 5 -->
   <section class="card">
-    <div class="card-head"><h3>5) Análise de Riscos & Checklist</h3><span id="scoreBadge" class="badge">Score: 100</span></div>
+    <div class="card-head"><h3 id="t-step5">5) Análise de Riscos & Checklist</h3><span id="scoreBadge" class="badge">Score: 100</span></div>
     <div id="avaliacaoLista" class="list"></div>
     <p class="muted" id="scoreLegenda">100 • Itens conformes — liberar</p>
-    <p class="muted">Itens base (6) + até 6 por atividade + até 6 por equipamento. Editáveis em <strong>Configurações → Checklist</strong>.</p>
   </section>
 
-  <!-- 6) Executantes -->
+  <!-- 6 -->
   <section class="card">
-    <div class="card-head"><h3>6) Executantes da Atividade</h3><span class="badge">Assinatura obrigatória</span></div>
+    <div class="card-head"><h3 id="t-step6">6) Executantes da Atividade</h3><span class="badge">Assinatura obrigatória</span></div>
     <div class="grid">
       <label class="field"><span>Adicionar executante</span><select id="selExecutante"></select></label>
       <div style="align-self:end"><button id="addExec" class="btn primary" type="button">+ Adicionar</button></div>
@@ -75,9 +76,9 @@
     <div id="execList" class="list" style="margin-top:8px"></div>
   </section>
 
-  <!-- 7) Responsáveis -->
+  <!-- 7 -->
   <section class="card">
-    <div class="card-head"><h3>7) Responsáveis da Atividade</h3><span class="badge">3 assinaturas obrigatórias</span></div>
+    <div class="card-head"><h3 id="t-step7">7) Responsáveis da Atividade</h3><span class="badge">3 assinaturas obrigatórias</span></div>
     <div class="grid">
       <label class="field"><span>Emissor</span><select id="respEmissor"></select></label>
       <label class="field"><span>Líder do Setor</span><select id="respLider"></select></label>
@@ -89,25 +90,38 @@
       <div class="field"><span>Assinatura Resp. Equipe</span><div class="signpad" data-role="resp"></div><div class="row-actions"><button class="btn" data-save-role="resp">Salvar assinatura</button><button class="btn ghost" data-clear-role="resp">Limpar</button></div></div>
     </div>
   </section>
+
+  <!-- 8 -->
+  <section class="card">
+    <div class="card-head"><h3 id="t-step8">8) Log de Não Conformidades</h3><span class="badge">Auto + editável</span></div>
+    <p class="muted">Esta área mostra automaticamente tudo que você marcou como <strong>NÃO</strong> no checklist; você pode complementar.</p>
+    <label class="field">
+      <span>Itens em não conformidade (um por linha)</span>
+      <textarea id="logNC" class="notes" placeholder="- [Crítico] Treinamento da equipe
+- Isolamento da área incompleto
+- ..."></textarea>
+    </label>
+  </section>
 </main>
 
-<!-- Botões fixos no rodapé -->
 <div class="footer-actions">
-  <a class="btn" href="settings.html">Configurações</a>
+  <a class="btn" href="settings.html" data-nav="settings">Configurações</a>
   <div style="display:flex;gap:8px;">
+    <a class="btn" href="dashboard.html" data-nav="dashboard">Dashboard</a>
+    <a class="btn" href="reports.html" data-nav="reports">Relatórios</a>
+    <a class="btn" href="help.html" data-nav="help">Ajuda</a>
     <button id="btnSalvarRascunho" class="btn">Salvar Rascunho</button>
     <button id="btnCancelar" class="btn ghost">Cancelar</button>
     <button id="btnConcluir" class="btn primary">Concluir (PDF + ZIP)</button>
   </div>
 </div>
 
-<!-- Área invisível para gerar PDF -->
+<!-- Área invisível para PDF -->
 <section id="report" class="print-report">
   <div style="display:flex;align-items:center;gap:12px">
     <img id="repLogo" alt="logo" style="max-height:26px;object-fit:contain">
     <h2 style="margin:0">Permissão de Trabalho (PTR)</h2>
   </div>
-
   <div class="print-grid" style="margin-top:12px">
     <div class="print-box" id="repInfo"></div>
     <div class="print-box" id="repMeta"></div>
@@ -117,9 +131,9 @@
     <div class="print-box" id="repScore"></div>
     <div class="print-box" id="repExecutantes"></div>
     <div class="print-box" id="repResponsaveis"></div>
+    <div class="print-box" id="repNC"></div>
     <div class="print-box" id="repCreditos"></div>
   </div>
-
   <p style="margin-top:10px;font-size:12px">
     Código único: <strong id="repUUID"></strong> • Gerado em <span id="repTs"></span><br>
     SHA-256 (JSON): <span id="repHash"></span>
@@ -144,12 +158,10 @@ const K_LOCAIS="LOC_LIST",K_PESSOAS="PESSOAS";
 const K_ATIV="CAT_ATIVIDADES",K_EQPT="CAT_EQUIPAMENTOS";
 const K_BP="BP_ALLOWED_GLOBAL",K_SIGN="SIGN_MODE",K_CRED="SYS_CREDITOS",K_LOGO="SYS_LOGO";
 const K_AVB="AVAL_BASE",K_AVA="AVAL_ATIVIDADES",K_AVE="AVAL_EQUIPAMENTOS";
+const K_ARCH="PTR_ARCHIVE",K_LOGS="PTR_LOGS";
 
-/* ===== LOGO no cabeçalho ===== */
-(function applyLogo(){
-  const logo=read(K_LOGO,null);
-  if(logo){ const img=$("#logoHead"); img.src=logo; img.style.display="block"; }
-})();
+/* ===== LOGO ===== */
+(function(){const l=read(K_LOGO,null); if(l){const i=$("#logoHead"); i.src=l; i.style.display="block";}})();
 
 /* ===== PREFILL ===== */
 const meta=read(K_SYS,{version:"1.0.0",revCode:"PTR-REV-A",revDate:todayISO()});
@@ -169,10 +181,10 @@ const creditos=read(K_CRED,{texto:"Sistema desenvolvido pela equipe do SGI da Me
 
 /* ===== FORM ===== */
 $("#setor").innerHTML=`<option value="">Selecione…</option>`+locais.map(l=>`<option>${l.name}</option>`).join("");
-$("#listaAtividades").innerHTML=catAtividades.map(a=>`<label class="check"><input type="checkbox" value="${a}"> ${a}</label>`).join("");
-$("#listaEquip").innerHTML=catEquip.map(e=>`<label class="check"><input type="checkbox" value="${e}"> ${e}</label>`).join("");
+$("#listaAtividades").innerHTML=catAtividades.map(a=>`<label class="check"><input type="checkbox" value="${a}"> <span>${a}</span></label>`).join("");
+$("#listaEquip").innerHTML=catEquip.map(e=>`<label class="check"><input type="checkbox" value="${e}"> <span>${e}</span></label>`).join("");
 
-/* ===== RISCOS (8 por atividade) ===== */
+/* ===== RISCOS ===== */
 const riscosPorAtv={
  "Trabalho em Altura":["Queda de pessoas","Queda de materiais","Falha de ancoragem","Clima adverso","Proximidade elétrica","Superfície escorregadia","Uso incorreto de EPI","Acesso inadequado"],
  "Espaço Confinado":["Baixo O2","Gás tóxico","Explosividade","Engolfamento","Resgate difícil","Iluminação insuficiente","Comunicação falha","Queda em abertura"],
@@ -186,13 +198,13 @@ function renderRiscos(){
   $("#riscosContainer").innerHTML=atvs.map(a=>`
    <div class="card thin">
      <div class="card-head"><h4>${a}</h4><span class="badge">${(riscosPorAtv[a]||[]).length} riscos</span></div>
-     <div class="list">${(riscosPorAtv[a]||[]).slice(0,8).map(r=>`<label class="check"><input type="checkbox" checked> ${r}</label>`).join("")}</div>
+     <div class="list">${(riscosPorAtv[a]||[]).slice(0,8).map(r=>`<label class="check"><input type="checkbox" checked> <span>${r}</span></label>`).join("")}</div>
    </div>`).join("") || `<p class="muted">Selecione um Tipo de Atividade.</p>`;
 }
 $("#listaAtividades").addEventListener("change",()=>{renderRiscos(); renderAval();});
 renderRiscos();
 
-/* ===== CHECKLIST (6 base + 6 por atividade + 6 por equipamento) ===== */
+/* ===== CHECKLIST ===== */
 const baseItems=read(K_AVB,[
  {id:"treino",texto:"Treinamento da equipe (NRs aplicáveis)",peso:100,critico:true},
  {id:"isolamento",texto:"Área isolada / LOTO / Permissões",peso:20,critico:false},
@@ -206,9 +218,9 @@ let allItems=[];
 function normalizedSix(arr,prefix){const b=(arr||[]).slice(0,6);while(b.length<6)b.push({id:`${prefix}_${b.length}`,texto:`Item ${b.length+1}`,peso:10,critico:false});return b}
 function radioRow(it){return `<div class="list-row"><span>${it.texto}${it.critico?' <strong style="color:#7a120c">(Crítico)</strong>':''}</span>
   <div class="row-actions">
-    <label class="check"><input type="radio" name="a_${it.id}" value="SIM" checked> SIM</label>
-    <label class="check"><input type="radio" name="a_${it.id}" value="NAO"> NÃO</label>
-    <label class="check"><input type="radio" name="a_${it.id}" value="NA"> N/A</label>
+    <label class="check"><input type="radio" name="a_${it.id}" value="SIM" checked> <span>SIM</span></label>
+    <label class="check"><input type="radio" name="a_${it.id}" value="NAO"> <span>NÃO</span></label>
+    <label class="check"><input type="radio" name="a_${it.id}" value="NA"> <span>N/A</span></label>
   </div></div>`}
 function renderAval(){
   const atvs=$$("#listaAtividades input:checked").map(i=>i.value);
@@ -217,7 +229,8 @@ function renderAval(){
   const e=eqps.flatMap(x=>normalizedSix(avalEqp[x],`eqp_${x}`));
   allItems=[...normalizedSix(baseItems,"base"),...a,...e];
   $("#avaliacaoLista").innerHTML=allItems.map(radioRow).join("");
-  calcScore();
+  $$(`#avaliacaoLista input[type=radio]`).forEach(r=>r.addEventListener("change",()=>{calcScore();updateNC();}));
+  calcScore(); updateNC();
 }
 function calcScore(){
   let s=100;
@@ -230,21 +243,38 @@ function calcScore(){
   $("#scoreLegenda").textContent = s===0?"0 • Crítica — não liberar": s<=25?`${s} • Crítica — não permitir`: s<=50?`${s} • Ação necessária — liberar com TST`: s<=75?`${s} • Ação necessária — liberar`: `${s} • Itens conformes — liberar`;
   return s;
 }
-$("#listaEquip").addEventListener("change",renderAval);
+$("#listaEquip").addEventListener("change",()=>{renderAval();updateNC();});
 renderAval();
 
-/* ===== Executantes + Assinaturas ===== */
+/* ===== LOG NC (auto) ===== */
+function updateNC(){
+  const linhas=[];
+  for(const it of allItems){
+    const v=(document.querySelector(`input[name="a_${it.id}"]:checked`)||{}).value||"SIM";
+    if(v==="NAO") linhas.push(`- ${it.critico?"[Crítico] ":""}${it.texto}`);
+  }
+  const ta=$("#logNC"); if(!ta._touched || !ta.value.trim()){ ta.value = linhas.join("\n"); }
+}
+$("#logNC").addEventListener("input",e=>e.target._touched=true);
+
+/* ===== Executantes & Assinaturas ===== */
 function isAlturaOuConfinado(){const a=$$("#listaAtividades input:checked").map(i=>i.value);return a.includes("Trabalho em Altura")||a.includes("Espaço Confinado")}
 function renderSelExec(){const execs=pessoas.filter(p=>p.perm?.exec);$("#selExecutante").innerHTML=`<option value="">Selecione…</option>`+execs.map(p=>`<option value="${p.id}">${p.nome} (${p.cpf})</option>`).join("")}
 renderSelExec();
 
 function mountSig(container,mode){
   container._dirty=false; container._saved=null;
+  const fitSize = () => Math.max(260, Math.min(560, Math.floor(container.clientWidth || 420)));
+
   if(mode==="draw"){
-    const c=document.createElement("canvas"); c.width=420; c.height=150; c.style.background="#fff"; c.style.border="1px dashed var(--border)"; c.style.borderRadius="12px";
+    const c=document.createElement("canvas");
+    const setSize = () => { c.width=fitSize(); c.height=Math.round(c.width*0.36); c.style.width="100%"; c.style.height="auto";
+      c.style.background="#fff"; c.style.border="1px dashed var(--border)"; c.style.borderRadius="12px"; };
+    setSize(); new ResizeObserver(setSize).observe(container);
+
     container.innerHTML=""; container.appendChild(c);
     const ctx=c.getContext("2d"); ctx.lineWidth=2; ctx.lineCap="round"; ctx.strokeStyle="#0b1d2a";
-    let draw=false,last=null; const pos=e=>{const r=c.getBoundingClientRect();const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;const y=(e.touches?e.touches[0].clientY:e.clientY)-r.top;return{x,y}}
+    let draw=false,last=null; const pos=e=>{const r=c.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}}
     const start=e=>{draw=true; last=pos(e)}; const move=e=>{if(!draw)return;const p=pos(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;container._dirty=true}; const end=()=>draw=false;
     c.addEventListener("mousedown",start);c.addEventListener("mousemove",move);window.addEventListener("mouseup",end);
     c.addEventListener("touchstart",start,{passive:true});c.addEventListener("touchmove",move,{passive:true});c.addEventListener("touchend",end,{passive:true});
@@ -281,9 +311,9 @@ function linhaExec(p){
     <div class="card-head"><h4>${p.nome}</h4><span class="badge">—</span></div>
     ${precisaPA?`<div class="grid">
       <label class="field"><span>Pressão arterial (ex.: 120/80) — ou N/A</span><input class="inp-pa" type="text" placeholder="120/80"></label>
-      <label class="check" style="align-self:end;"><input class="inp-pa-na" type="checkbox"> N/A</label>
+      <label class="check" style="align-self:end;"><input class="inp-pa-na" type="checkbox"> <span>N/A</span></label>
     </div>`:`<p class="muted">PA não exigida para as atividades selecionadas.</p>`}
-    <div class="field" style="margin-top:8px;"><span>Assinatura (${signMode})</span><div class="signpad"></div></div>
+    <div class="field" style="margin-top:8px;"><span>Assinatura</span><div class="signpad"></div></div>
     <div class="row-actions" style="margin-top:6px;"><button class="btn" data-save>Salvar assinatura</button><button class="btn ghost" data-clear>Limpar</button><button class="btn ghost" data-rem>Remover</button></div>
   </div>`;
 }
@@ -295,12 +325,8 @@ function refreshExecCard(card,id){
   const okTR=treinaOk(p,atvs);
   const ok=okPA&&okTR; const b=card.querySelector(".badge"); b.textContent=ok?"APTO":"INAPTO"; b.className=`badge ${ok?'good':'bad'}`; return ok;
 }
-function renderSelResp(){function opts(pred){return pessoas.filter(pred).map(p=>`<option value="${p.id}">${p.nome} (${p.cpf})</option>`).join("")}
-  $("#respEmissor").innerHTML=`<option value="">Selecione…</option>`+opts(p=>p.perm?.emis);
-  $("#respLider").innerHTML=`<option value="">Selecione…</option>`+opts(p=>p.perm?.lider);
-  $("#respEquipe").innerHTML=`<option value="">Selecione…</option>`+opts(p=>p.perm?.resp);
-}
-renderSelResp();
+function renderSelExec(){const execs=pessoas.filter(p=>p.perm?.exec);$("#selExecutante").innerHTML=`<option value="">Selecione…</option>`+execs.map(p=>`<option value="${p.id}">${p.nome} (${p.cpf})</option>`).join("")}
+renderSelExec();
 
 $("#addExec").onclick=()=>{
   const id=$("#selExecutante").value; if(!id || $(`#execList [data-person="${id}"]`)) return;
@@ -316,7 +342,7 @@ $("#addExec").onclick=()=>{
 };
 $("#listaAtividades").addEventListener("change",()=> $$("#execList .card").forEach(c=>refreshExecCard(c,c.dataset.person)));
 
-/* Assinaturas dos responsáveis (salvar/limpar dedicados) */
+/* Assinaturas dos responsáveis */
 function attachRespButtons(){
   $$("[data-save-role]").forEach(btn=>{
     const role=btn.getAttribute("data-save-role"); btn.onclick=()=>{ const box=$(`.signpad[data-role="${role}"]`); const d=box._getData?.(); if(!d){alert("Assinatura vazia.");return;} box._saved=d; alert("Assinatura salva ✅"); };
@@ -341,6 +367,7 @@ function collect(){
     return {atividade:titulo,riscos:rs};
   });
   const aval={}; for(const it of allItems){ aval[it.id]=(document.querySelector(`input[name="a_${it.id}"]:checked`)||{}).value||"SIM"; }
+  const nc_items=Object.keys(aval).filter(id=>aval[id]==="NAO").map(id=>allItems.find(x=>x.id===id)).filter(Boolean).map(it=>({texto:it.texto,critico:!!it.critico}));
   const execs=$$("#execList .card").map(card=>{
     const id=card.dataset.person, p=pessoas.find(x=>String(x.id)===String(id));
     const pa=card.querySelector(".inp-pa")?.value||"", paNA=card.querySelector(".inp-pa-na")?.checked||false;
@@ -356,6 +383,7 @@ function collect(){
     empresa:$("#empresa").value.trim(), ptr:$("#ptrCodigo").value.trim(), data:$("#data").value, hora:normTime(),
     setor:$("#setor").value, atividadeDesc:$("#atividadeDesc").value.trim(),
     atividades:atvs, equipamentos:eqps, riscos, avaliacao:aval, score:calcScore(),
+    naoConformidades:{itens:nc_items, texto:$("#logNC").value},
     executantes:execs, responsaveis:r, assinaturaResp:ass, _dirtyResp:dirty,
     _meta:meta, _creditos:creditos
   };
@@ -376,10 +404,7 @@ function validate(p){
 function fillReport(p,uid,hash){
   const nomePorId=id=>(pessoas.find(x=>String(x.id)===String(id))||{}).nome||"—";
   const set=(id,html)=>$("#"+id).innerHTML=html;
-
-  // Logo no PDF
   const logo=read(K_LOGO,null); const repLogo=$("#repLogo"); if(logo){repLogo.src=logo;} else {repLogo.removeAttribute("src");}
-
   set("repInfo",`<h4>Dados</h4><p><b>Empresa:</b> ${p.empresa}</p><p><b>PTR:</b> ${p.ptr}</p><p><b>Data:</b> ${p.data} • <b>Hora:</b> ${p.hora}</p><p><b>Setor:</b> ${p.setor}</p><p><b>Atividade:</b> ${p.atividadeDesc||"—"}</p>`);
   set("repMeta",`<h4>Metadados</h4><p><b>Versão:</b> v${p._meta.version}</p><p><b>Revisão:</b> ${p._meta.revCode} • ${p._meta.revDate}</p><p><b>Código único:</b> ${uid}</p>`);
   set("repAtividades",`<h4>Atividades</h4><ul>${p.atividades.map(a=>`<li>${a}</li>`).join("")}</ul>`);
@@ -391,6 +416,8 @@ function fillReport(p,uid,hash){
     <div><b>Emissor:</b> ${nomePorId(p.responsaveis.emissor)}</div>${p.assinaturaResp.emissor?`<img class="sign-pad-img" src="${p.assinaturaResp.emissor}">`:""}
     <div style="margin-top:6px"><b>Líder:</b> ${nomePorId(p.responsaveis.lider)}</div>${p.assinaturaResp.lider?`<img class="sign-pad-img" src="${p.assinaturaResp.lider}">`:""}
     <div style="margin-top:6px"><b>Resp. Equipe:</b> ${nomePorId(p.responsaveis.resp)}</div>${p.assinaturaResp.resp?`<img class="sign-pad-img" src="${p.assinaturaResp.resp}">`:""}`);
+  const ncText = (p.naoConformidades?.texto||"").split(/\r?\n/).filter(Boolean).map(s=>`<li>${s.replace(/^-+\s*/,'')}</li>`).join("") || "<li>—</li>";
+  set("repNC",`<h4>Log de Não Conformidades</h4><ul>${ncText}</ul>`);
   set("repCreditos",`<h4>Créditos & Aviso</h4><p>${p._creditos.texto}</p>`);
   $("#repUUID").textContent=uid; $("#repTs").textContent=new Date().toLocaleString(); $("#repHash").textContent=hash;
 }
@@ -414,6 +441,7 @@ async function renderPDF(){
 $("#btnConcluir").onclick=async()=>{
   const p=collect(); if(!validate(p)) return;
   write(K_SEQ, ++seq);
+
   const json=JSON.stringify(p), hash=await sha256Hex(json), uid=uuid();
   fillReport(p,uid,hash);
 
@@ -431,7 +459,22 @@ $("#btnConcluir").onclick=async()=>{
   const zipBlob=await zip.generateAsync({type:"blob"});
   saveAs(zipBlob, `${base}-${dd}-${mm}-${yyyy}.zip`);
   saveAs(pdfBlob, pdfName);
-  alert("PDF + ZIP gerados ✅");
+
+  // Arquiva para dashboard/relatórios
+  const archive=read(K_ARCH,[]);
+  archive.push({uid,hash,ptr:p.ptr,data:p.data,hora:p.hora,setor:p.setor,atividades:p.atividades,equipamentos:p.equipamentos,
+    executantes:p.executantes.map(e=>({id:e.id,nome:e.nome,cpf:e.cpf})),
+    naoConformidades:p.naoConformidades,
+    responsaveis:p.responsaveis, createdAt:new Date().toISOString(), json:p});
+  write(K_ARCH,archive);
+
+  const logs=read(K_LOGS,[]);
+  p.atividades.forEach(a=>logs.push({type:"atividade",nome:a,data:p.data,createdAt:new Date().toISOString()}));
+  p.equipamentos.forEach(e=>logs.push({type:"equip",nome:e,data:p.data,createdAt:new Date().toISOString()}));
+  p.executantes.forEach(x=>logs.push({type:"executor",nome:x.nome,data:p.data,createdAt:new Date().toISOString()}));
+  write(K_LOGS,logs);
+
+  alert("PDF + ZIP gerados e registro arquivado ✅");
 };
 </script>
 </body>
